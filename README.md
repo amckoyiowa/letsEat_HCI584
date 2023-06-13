@@ -11,7 +11,7 @@ The user will enter a food item like “pasta” and see different recipes for c
 - Select food item
 - View recipe
 ## What is the primary interaction? Is there an interaction loop?
-Searching a food iten
+Searching a food item
 ## What data would be used (input), how would you get it and how is it processed/analyzed?
 Dataset: https://www.kaggle.com/datasets/shuyangli94/food-com-recipes-and-user-interactions?select=RAW_recipes.csv
 ## What are the results and how are they presented? 
