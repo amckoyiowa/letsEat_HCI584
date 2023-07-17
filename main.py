@@ -58,6 +58,7 @@ class App(Frame):
     def process_entry(self, event=None):
         search_term = self.entry_text_variable.get() # get content of text entry field
         print(search_term)
+        
 
 # This cell is running the app
 master = Tk()  # create a Tk window called master
