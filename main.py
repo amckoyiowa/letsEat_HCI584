@@ -9,6 +9,8 @@ import urllib.parse # for making a safe URL
 import requests 
 import random
 import string
+from os import sep, getcwd, walk, listdir, chdir
+from os.path import exists, isdir, isfile, getsize, basename, join, split
 from pprint import pprint
 
 class App(Frame):
@@ -57,9 +59,38 @@ class App(Frame):
 
     def process_entry(self, event=None):
         search_term = self.entry_text_variable.get() # get content of text entry field
+        if self.check_folder("Data"):
+            # get files in folder1 in list1
+            with open("Data/RAW_recipes.csv", 'r') as file:
+                contents = file.read()
+                print(contents[0])
         print(search_term)
-        
 
+    def check_folder(self, folder):
+        '''Will check if the folder (string) exists and also is not a file and also in not empty.
+        Returns True if ALL three conditions are fulfilled, otherwise returns False
+        '''
+
+        # 1) check that the folder actually exists  (potential user typo?)
+        if not exists(folder):
+            # on error, return an informative error message (a single string!)
+            return "\nError: The folder name you provided does not exists. Please check your input for typos."
+        
+        
+        # 2) check that folder is actually a folder, not just a weirdly named file 
+        if not isdir(folder):
+            # on error, return an informative error message (a single string!)
+            return "\nError: The name you provided is not a folder. Please try again."
+
+
+        # 3) check that folder actally contains any files or folders (i.e. is NOT empty) 
+        if len(listdir(folder)) == 0:
+            # on error, return an informative error message (a single string!)
+            return "\nError: The folder name you provided is empty."
+        
+        
+        # 4) if no errors occured, return True
+        return True
 # This cell is running the app
 master = Tk()  # create a Tk window called master
 master.title("A simple TkInter text editor")
