@@ -12,6 +12,7 @@ import string
 from os import sep, getcwd, walk, listdir, chdir
 from os.path import exists, isdir, isfile, getsize, basename, join, split
 from pprint import pprint
+import csv
 
 class App(Frame):
     def __init__(self, master):     
@@ -59,11 +60,15 @@ class App(Frame):
 
     def process_entry(self, event=None):
         search_term = self.entry_text_variable.get() # get content of text entry field
+        results = []
         if self.check_folder("Data"):
             # get files in folder1 in list1
             with open("Data/RAW_recipes.csv", 'r') as file:
-                contents = file.read()
-                print(contents[0])
+                csv_reader = csv.DictReader(file)
+                for row in csv_reader:
+                    if search_term in row["name"]:
+                        print(row)
+                        results.append(row)
         print(search_term)
 
     def check_folder(self, folder):
