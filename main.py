@@ -15,7 +15,7 @@ class App(Frame):
     def __init__(self, master):     
         self.master = master # store link to master window, use as frame to put all other widgets into
         # make a label
-        self.label = Label(self.master, text="Search a protein you're in the mood for", 
+        self.label = Label(self.master, text="What would you like to eat?", 
                            justify=LEFT, 
                            font= ("Helvetica","16", "bold"))        
         self.label.grid(row=0, column=0, sticky="e")
@@ -24,6 +24,11 @@ class App(Frame):
         self.entry_text_variable = StringVar()
         self.entry = Entry(self.master, width=30, 
                            textvariable=self.entry_text_variable) # textvariable arg needs to be a special TKinter variable!
+
+        # add a Run search button that will run your processing method
+        # and/or bind() the Return key into the Entry widget to run your processing method 
+        self.entry.bind("<Return>", self.process_entry) 
+        self.entry.grid(row=0, column=1, sticky="w") # sticky="w" make stick to west
 
         # quit button
         self.button2 = Button(self.master, text="Quit", command=self.quit)
@@ -49,6 +54,10 @@ class App(Frame):
         # this connects changes in the scroll bar to changing the text area
         # i.e. the text area will show a smaller window into the full text
         self.text.configure(yscrollcommand=self.text_scroll.set)
+
+    def process_entry(self, event=None):
+        search_term = self.entry_text_variable.get() # get content of text entry field
+        print(search_term)
 
 # This cell is running the app
 master = Tk()  # create a Tk window called master
