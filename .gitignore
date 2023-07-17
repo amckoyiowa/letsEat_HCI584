@@ -6,6 +6,9 @@ __pycache__/
 # C extensions
 *.so
 
+# folders
+Data/RAW_recipes.csv
+
 # Distribution / packaging
 .Python
 build/
