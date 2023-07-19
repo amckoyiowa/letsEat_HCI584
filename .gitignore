@@ -1,3 +1,10 @@
+# csv file is too big for github! 
+Data/RAW_recipes.csv
+RAW_recipes.csv
+
+
+
+
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
@@ -5,9 +12,6 @@ __pycache__/
 
 # C extensions
 *.so
-
-# folders
-Data/RAW_recipes.csv
 
 # Distribution / packaging
 .Python
