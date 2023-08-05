@@ -39,7 +39,7 @@ class App(Frame):
                            textvariable=self.time_entry_text_variable)
         # add a Run search button that will run your processing method
         # and/or bind() the Return key into the Entry widget to run your processing method 
-        self.entry.bind("<Return>", self.process_entry) 
+        self.entry.bind("<Return>", self.grabFirstEntry) 
         self.entry.grid(row=0, column=1, sticky="w") # sticky="w" make stick to west
 
         self.timeEntry.bind("<Return>", self.process_entry) 
@@ -70,19 +70,29 @@ class App(Frame):
         # i.e. the text area will show a smaller window into the full text
         self.text.configure(yscrollcommand=self.text_scroll.set)
 
+    def grabFirstEntry(self, event=None):
+       first_search_term = self.entry_text_variable.get()
+       #print(first_search_term)
     def process_entry(self, event=None):
-        search_term = self.entry_text_variable.get() # get content of text entry field
+        first_term = self.entry_text_variable.get() # get content of text entry field
+        second_term = self.time_entry_text_variable.get()
         results = []
         if self.check_folder("Data"):
             # get files in folder1 in list1
             with open("Data/RAW_recipes.csv", 'r') as file:
                 csv_reader = csv.DictReader(file)
                 for row in csv_reader:
-                    if search_term in row["name"]:
-                        print(row)
+                    if first_term in row["name"] and int(second_term) >= int(row["minutes"]):
+                        # print(row)
                         results.append(row)
+                        name = row["name"]
+                        minutes = row["minutes"]
+                        description = row["description"]
+                        lineitem = name +": " + description + ". Takes "+ minutes +" minutes to make. "+"\n"
+                        self.text.insert(END,lineitem)
+                        self.text.insert(END,"\n")
                         # print recipe steps, description
-        print(search_term)
+        
 
     def check_folder(self, folder):
         '''Will check if the folder (string) exists and also is not a file and also in not empty.
