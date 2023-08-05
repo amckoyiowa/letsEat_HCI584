@@ -20,18 +20,30 @@ class App(Frame):
         # make a label
         self.label = Label(self.master, text="What would you like to eat?", 
                            justify=LEFT, 
+                           font= ("Helvetica","16", "bold"))
+        self.time_label = Label(self.master, text="How many minutes would you like to spend?", 
+                           justify=LEFT, 
                            font= ("Helvetica","16", "bold"))        
         self.label.grid(row=0, column=0, sticky="e")
+        self.time_label.grid(row=1, column=0, sticky="e")
 
         # make a entry field for the search to save the text into on quit 
         self.entry_text_variable = StringVar()
+        self.time_entry_text_variable = StringVar()
+
         self.entry = Entry(self.master, width=30, 
                            textvariable=self.entry_text_variable) # textvariable arg needs to be a special TKinter variable!
 
+        # time to make
+        self.timeEntry = Entry(self.master, width=30, 
+                           textvariable=self.time_entry_text_variable)
         # add a Run search button that will run your processing method
         # and/or bind() the Return key into the Entry widget to run your processing method 
         self.entry.bind("<Return>", self.process_entry) 
         self.entry.grid(row=0, column=1, sticky="w") # sticky="w" make stick to west
+
+        self.timeEntry.bind("<Return>", self.process_entry) 
+        self.timeEntry.grid(row=1, column=1, sticky="w") # sticky="w" make stick to west
 
         # quit button
         self.button2 = Button(self.master, text="Quit", command=self.quit)
@@ -44,7 +56,7 @@ class App(Frame):
         self.textframe=Frame(self.master)
 
         # put text frame in 2.row but merge the all columns of row 1 together
-        self.textframe.grid(row=1, column=0, columnspan=3, sticky=(N, S, E, W)) 
+        self.textframe.grid(row=3, column=0, columnspan=3, sticky=(N, S, E, W)) 
 
         # create and pack the text area
         self.text=Text(self.textframe, height=30, width=100,wrap=WORD)
@@ -69,6 +81,7 @@ class App(Frame):
                     if search_term in row["name"]:
                         print(row)
                         results.append(row)
+                        # print recipe steps, description
         print(search_term)
 
     def check_folder(self, folder):
